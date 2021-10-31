@@ -1,13 +1,9 @@
 # Define baseimage
-FROM continuumio/miniconda3
-
-ENV PATH /usr/local/bin/:$PATH
+FROM python:3.8.12-slim-buster
 
 COPY . /app/
 
-# Python Installation
-RUN conda install -y python==3.8 \
-    && conda clean -ya
+WORKDIR /app
 
 # To install dependencies
 RUN pip install -r requirements.txt
