@@ -1,14 +1,17 @@
 # Define baseimage
-FROM python:3.8.12-slim
+FROM continuumio/miniconda3
 
 ENV PATH /usr/local/bin/:$PATH
 
-WORKDIR /home/bayeslabs/app
-COPY . /home/bayeslabs/app/
+COPY . /app/
+
+# Python Installation
+RUN conda install -y python==3.8 \
+    && conda clean -ya
 
 # To install dependencies
 RUN pip install -r requirements.txt
 
 EXPOSE 8000
 
-ENTRYPOINT ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+ENTRYPOINT ["uvicorn", "mlfastapi:app", "--host", "0.0.0.0", "--port", "8000"]
